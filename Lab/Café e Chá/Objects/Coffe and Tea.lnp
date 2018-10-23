@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Coffe and Tea.obj" 
+TO ".\Objects\Coffe and Tea" 
+PRINT(".\Listings\Coffe and Tea.m51") RAMSIZE(256) 

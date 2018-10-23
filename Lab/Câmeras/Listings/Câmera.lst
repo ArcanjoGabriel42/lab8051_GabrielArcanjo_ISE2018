@@ -1,0 +1,167 @@
+C51 COMPILER V9.59.0.0   C_MERA                                                            10/19/2018 22:48:31 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE C_MERA
+OBJECT MODULE PLACED IN .\Objects\Câmera.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Câmera.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Câ
+                    -mera.lst) TABS(2) OBJECT(.\Objects\Câmera.obj)
+
+line level    source
+
+   1          #include <at89x52.h>
+   2          
+   3          #define CAMERA1 P2_0
+   4          #define CAMERA2 P2_1
+   5          #define CAMERA3 P2_2
+   6          #define CAMERA4 P2_3
+   7          
+   8          #define SENSOR1 P1_0
+   9          #define SENSOR2 P1_1
+  10          #define SENSOR3 P1_2
+  11          #define SENSOR4 P1_3
+  12          
+  13          #define Alarm P2_4
+  14          #define Siren P2_5
+  15          #define REC P2_6
+  16          
+  17          const int LIGADO = 0;
+  18          const int DESLIGADO = 1;
+  19          
+  20          int esta_vazia();
+  21          void rotina_1();
+  22          void rotina_2();
+  23          void rotina_3();
+  24          void rotina_4();
+  25          void camera();
+  26          void delay(unsigned int tempo_ms);
+  27          void exception() interrupt 0{
+  28   1        Siren = LIGADO;
+  29   1        if (Alarm == DESLIGADO){
+  30   2          Siren = DESLIGADO;
+  31   2          P3_2 = 1;
+  32   2        }
+  33   1      }
+  34          
+  35          void main(){
+  36   1        EA = 1;
+  37   1        EX0 = 1;
+  38   1        while(1){
+  39   2          if (Alarm == LIGADO & !esta_vazia()){
+  40   3            P3_2 = 0;
+  41   3          }
+  42   2          else if (!esta_vazia())
+  43   2          {
+  44   3            REC = LIGADO;
+  45   3            camera();
+  46   3          }else{
+  47   3            REC = DESLIGADO;
+  48   3          }
+  49   2        }
+  50   1      }
+  51          void rotina1(){
+  52   1        CAMERA1 = LIGADO;
+  53   1        delay(1000);
+  54   1        CAMERA1 = DESLIGADO;
+C51 COMPILER V9.59.0.0   C_MERA                                                            10/19/2018 22:48:31 PAGE 2   
+
+  55   1        CAMERA2 = LIGADO;
+  56   1        delay(1000);
+  57   1        CAMERA2 = DESLIGADO;
+  58   1        CAMERA3 = LIGADO;
+  59   1        delay(1000);
+  60   1        CAMERA3 = DESLIGADO;
+  61   1        CAMERA4 = LIGADO;
+  62   1        delay(1000);
+  63   1        CAMERA4 = DESLIGADO;
+  64   1        CAMERA1 = LIGADO;
+  65   1        delay(1000);
+  66   1      }
+  67          void rotina2(){
+  68   1        CAMERA2 = LIGADO;
+  69   1        delay(1000);
+  70   1        CAMERA2 = DESLIGADO;
+  71   1        CAMERA3 = LIGADO;
+  72   1        delay(1000);
+  73   1        CAMERA3 = DESLIGADO;
+  74   1        CAMERA4 = LIGADO;
+  75   1        delay(1000);
+  76   1        CAMERA4 = DESLIGADO;
+  77   1        CAMERA1 = LIGADO;
+  78   1        delay(1000);
+  79   1        CAMERA1 = DESLIGADO;
+  80   1        CAMERA2 = LIGADO;
+  81   1        delay(1000);
+  82   1        CAMERA2 = DESLIGADO;
+  83   1      }
+  84          void rotina3(){
+  85   1        CAMERA3 = LIGADO;
+  86   1        delay(1000);
+  87   1        CAMERA3 = DESLIGADO;
+  88   1        CAMERA4 = LIGADO;
+  89   1        delay(1000);
+  90   1        CAMERA4 = DESLIGADO;
+  91   1        CAMERA1 = LIGADO;
+  92   1        delay(1000);
+  93   1        CAMERA1 = DESLIGADO;
+  94   1        CAMERA2 = LIGADO;
+  95   1        delay(1000);
+  96   1        CAMERA2 = DESLIGADO;
+  97   1        CAMERA3 = LIGADO;
+  98   1        delay(1000);
+  99   1        CAMERA3 = DESLIGADO;  
+ 100   1      }
+ 101          void rotina4(){
+ 102   1        CAMERA4 = LIGADO;
+ 103   1        delay(1000);
+ 104   1        CAMERA4 = DESLIGADO;
+ 105   1        CAMERA1 = LIGADO;
+ 106   1        delay(1000);
+ 107   1        CAMERA1 = DESLIGADO;
+ 108   1        CAMERA2 = LIGADO;
+ 109   1        delay(1000);
+ 110   1        CAMERA2 = DESLIGADO;
+ 111   1        CAMERA3 = LIGADO;
+ 112   1        delay(1000);
+ 113   1        CAMERA3 = DESLIGADO;
+ 114   1        CAMERA4 = LIGADO;
+ 115   1        delay(1000);
+ 116   1        CAMERA4 = DESLIGADO;
+C51 COMPILER V9.59.0.0   C_MERA                                                            10/19/2018 22:48:31 PAGE 3   
+
+ 117   1      }
+ 118          int esta_vazia(){
+ 119   1        return ((SENSOR1 == DESLIGADO) & (SENSOR2 == DESLIGADO) & (SENSOR3 == DESLIGADO) & (SENSOR4 == DESLIGADO)
+             -);
+ 120   1      }
+ 121          void camera(){
+ 122   1        if (SENSOR1 == LIGADO){
+ 123   2          rotina1();
+ 124   2        }else if (SENSOR2 == LIGADO){
+ 125   2          rotina2();
+ 126   2        }else if (SENSOR3 == LIGADO){
+ 127   2          rotina3();
+ 128   2        }else{
+ 129   2          rotina4();
+ 130   2        }
+ 131   1      }
+ 132          void delay(unsigned int tempo_ms){
+ 133   1        int i,j;
+ 134   1        for (i = 0; i < tempo_ms; i++){
+ 135   2          for (j = 0; j < 12000; j++){
+ 136   3          }
+ 137   2        }
+ 138   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    614    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

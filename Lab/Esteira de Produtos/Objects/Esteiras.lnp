@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Esteiras.obj" 
+TO ".\Objects\Esteiras" 
+PRINT(".\Listings\Esteiras.m51") RAMSIZE(256) 

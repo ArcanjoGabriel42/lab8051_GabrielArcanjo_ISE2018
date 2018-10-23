@@ -1,0 +1,87 @@
+C51 COMPILER V9.59.0.0   COFFE_AND_TEA                                                     10/16/2018 03:09:47 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE COFFE_AND_TEA
+OBJECT MODULE PLACED IN .\Objects\Coffe and Tea.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Coffe and Tea.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\Coffe and Tea.lst) TABS(2) OBJECT(.\Objects\Coffe and Tea.obj)
+
+line level    source
+
+   1          #include <at89x52.h>
+   2          #define HIB P2_0
+   3          #define K P2_1
+   4          #define T P2_2
+   5          #define COFFE P2_3
+   6          #define TEA P2_4
+   7          #define GLASS P2_5
+   8          const int LIGADO = 0;
+   9          const int DESLIGADO = 1;
+  10          int contador = 0;
+  11          
+  12          void coin() interrupt 0{
+  13   1        HIB = LIGADO;
+  14   1      }
+  15          void timer() interrupt 1{
+  16   1        TR0 = 0;
+  17   1        TH0 = 0x3C;
+  18   1        TL0 = 0xAF;
+  19   1        TR0 = 1;
+  20   1        
+  21   1        contador++;
+  22   1        
+  23   1        if (contador == 600 && (K == LIGADO || T == LIGADO)){
+  24   2          contador = 0;
+  25   2          if (K == LIGADO){
+  26   3            K = DESLIGADO;
+  27   3            COFFE = LIGADO;
+  28   3          }else{
+  29   3            T = DESLIGADO;
+  30   3            TEA = LIGADO;
+  31   3          }
+  32   2        }
+  33   1        if (contador == 1000){
+  34   2          TR0 = 0;
+  35   2          contador = 0;
+  36   2          COFFE = DESLIGADO;
+  37   2          TEA = DESLIGADO;
+  38   2          GLASS = LIGADO;
+  39   2        }
+  40   1      }
+  41          int main(){
+  42   1        EA = 1;
+  43   1        EX0 = 1;
+  44   1        ET0 = 1;
+  45   1        IT0 = 1;
+  46   1        TMOD = 1;
+  47   1        while(1){
+  48   2          if(HIB == LIGADO && K == LIGADO){
+  49   3            TR0 = 1;
+  50   3            HIB = DESLIGADO;
+  51   3          }
+  52   2          if(HIB == LIGADO && T == LIGADO){
+  53   3            TR0 = 1;
+  54   3            HIB = DESLIGADO;
+C51 COMPILER V9.59.0.0   COFFE_AND_TEA                                                     10/16/2018 03:09:47 PAGE 2   
+
+  55   3          }
+  56   2          if (GLASS == LIGADO){
+  57   3            GLASS = DESLIGADO;
+  58   3            P3_2 = DESLIGADO;
+  59   3          }
+  60   2        }
+  61   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    261    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

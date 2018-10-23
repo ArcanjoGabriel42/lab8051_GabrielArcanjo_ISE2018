@@ -1,0 +1,64 @@
+C51 COMPILER V9.59.0.0   ESTEIRAS                                                          10/16/2018 08:11:45 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE ESTEIRAS
+OBJECT MODULE PLACED IN .\Objects\Esteiras.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Esteiras.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -Esteiras.lst) TABS(2) OBJECT(.\Objects\Esteiras.obj)
+
+line level    source
+
+   1          #include <at89x52.h>
+   2          #define ESTEIRAPROD P2_0
+   3          #define ESTEIRABOX P2_1
+   4          
+   5          const int LIGADO = 0;
+   6          const int DESLIGADO = 1;
+   7          
+   8          void delay(unsigned int tempo_ms){
+   9   1        int i,j;
+  10   1        for (i = 0; i < tempo_ms; i++){
+  11   2          for (j = 0; j < 12750; j++){
+  12   3          }
+  13   2        }
+  14   1      }
+  15          
+  16          void timer() interrupt 1{
+  17   1        TR0 = 0; //Para a contagem
+  18   1        TH0 = 0xFF; //Caixa suporta somente 100 produtos
+  19   1        TL0 = 0x9B; //Inicia os registradores com 65435
+  20   1        
+  21   1        ESTEIRAPROD = DESLIGADO; //Desliga a esteira de produtos
+  22   1        ESTEIRABOX = LIGADO; //Liga as esteiras das caixas
+  23   1        delay(1500); //Tempo para posicionamento da caixa
+  24   1        ESTEIRABOX = DESLIGADO; //Desliga esteira das caixas
+  25   1        ESTEIRAPROD = LIGADO; //Religa a esteira de produtos
+  26   1        delay(500);
+  27   1        TR0 = 1; //Religa contagens
+  28   1        
+  29   1      }
+  30          int main(){
+  31   1        EA = 1;
+  32   1        ET0 = 1;
+  33   1        TMOD = 1;
+  34   1        TR0 = 1;
+  35   1        
+  36   1        while(1){
+  37   2        }
+  38   1      } 
+  39            
+  40          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    135    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

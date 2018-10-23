@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Câmera.obj" 
+TO ".\Objects\Sistema de Segurança" 
+PRINT(".\Listings\Sistema de Segurança.m51") RAMSIZE(256) 
